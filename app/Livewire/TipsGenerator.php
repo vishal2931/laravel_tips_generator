@@ -12,26 +12,40 @@ class TipsGenerator extends Component
     public function render()
     {
         $this->tip = $this->generateTips();
+
         return view('livewire.tips-generator');
+    }
+
+    public function regenerateTip()
+    {
+        $this->tip = $this->generateTips();
     }
 
     private function generateTips()
     {
-        return [
-            "name" => "Controller groups",
-            "description" => "Instead of using the controller in each route, consider using a route controller group. Added to Laravel since v8.80",
-            "original_image" => "https://laraveldaily.com/storage/157/Screenshot-2022-11-04-at-07.54.00.png",
-            "stream_image" => "https://laraveldaily.com/storage/157/conversions/Screenshot-2022-11-04-at-07.54.00-twitter_stream.jpg",
-        ];
         $response = Http::get(config('custom.laravel_daily_api_url'));
         if ($response->successful()) {
 
             $response = $response->json();
+            $response = $response['data'][0];
 
-            return $response['data'][0];
+            // Convert image url to base64 for include image while generating screenshot.
+            $response['original_image'] = $this->generateBase64Image($response['original_image']);
+
+            return $response;
 
         } else {
             return [];
         }
+    }
+
+    private function generateBase64Image($url)
+    {
+        $url = $url ?: asset('images/placeholder.jpg');
+        $type = pathinfo($url, PATHINFO_EXTENSION);
+        $data = file_get_contents($url);
+        $base64 = 'data:image/'.$type.';base64,'.base64_encode($data);
+
+        return $base64;
     }
 }

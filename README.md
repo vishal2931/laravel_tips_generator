@@ -1,7 +1,7 @@
 # Laravel Tips Generator
 
 
-This is a simple Laravel Tips Generator which uses @LaravelDaily tip API behind scene. You can generate Random Laravel Tips and download as image.
+This is a simple Laravel Tips Generator which uses <a href="https://laraveldaily.com/" target="_blank">@LaravelDaily</a> tip API behind scene. You can generate Random Laravel Tips and download as image.
 
 ## Installation
 

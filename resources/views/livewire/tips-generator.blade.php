@@ -40,12 +40,12 @@
     </div>
     @section('custom_javascript')
         <script>
-            html2canvas(document.querySelector("#capture")).then(function(canvas) {
-                var canvasWidth = canvas.width;
-                var canvasHeight = canvas.height;
-                var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
-                document.getElementById("capture-screenshot").addEventListener("click", function(e) {
-                    e.preventDefault();
+            document.getElementById("capture-screenshot").addEventListener("click", function(e) {
+                e.preventDefault();
+                html2canvas(document.querySelector("#capture")).then(function(canvas) {
+                    var canvasWidth = canvas.width;
+                    var canvasHeight = canvas.height;
+                    var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
                     Canvas2Image.saveAsImage(canvas, canvasWidth, canvasHeight, 'png', document.getElementById('tip_name').value);
                 });
             });
